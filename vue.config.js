@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')

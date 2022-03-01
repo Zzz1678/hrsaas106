@@ -1,6 +1,6 @@
 export default {
     namespaced: true,
-    state,
-    mutations,
-    actions
+    state: {},
+    mutations: {},
+    actions: {}
 }
