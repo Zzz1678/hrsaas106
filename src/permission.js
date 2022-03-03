@@ -6,7 +6,7 @@ import 'nprogress/nprogress.css' //引入进度条样式
 // 定义白名单  所有不受权限控制的页面
 const whiteList = ['/login', '/404'];
 // 权限拦截 导航前置守卫 路由守卫  router
-router.beforeEach(function(to, from, next) {
+router.beforeEach(async function(to, from, next) {
     // 开启进度条
     NProgress.start()
         //判断是否有token
@@ -16,6 +16,9 @@ router.beforeEach(function(to, from, next) {
             next('/')
                 // 其他直接放行
         } else {
+            if (!store.getters.userId) {
+                await store.dispatch('user/getUserInfo')
+            }
             next()
         }
     } else {
@@ -27,6 +30,7 @@ router.beforeEach(function(to, from, next) {
             next("/login")
         }
     }
+
     // 关闭进度条
     NProgress.done();
 });

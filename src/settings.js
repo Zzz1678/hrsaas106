@@ -13,6 +13,6 @@ module.exports = {
      * @type {boolean} true | false
      * @description Whether show the logo in sidebar
      */
-    sidebarLogo: false
+    sidebarLogo: true
         // eslint-disable-next-line eol-last
 }
