@@ -1,6 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import approvalsRouter from './modules/approvals'
+import departmentsRouter from './modules/departments'
+import employeesRouter from './modules/employees'
+import permissionRouter from './modules/permission'
+import attendancesRouter from './modules/attendances'
+import salarysRouter from './modules/salarys'
+import settingRouter from './modules/setting'
+import socialRouter from './modules/social'
+
 Vue.use(Router)
 
 /* Layout */
@@ -61,10 +70,21 @@ export const constantRoutes = [{
     { path: '*', redirect: '/404', hidden: true }
 ]
 
+export const asyncRouter = [
+    approvalsRouter,
+    departmentsRouter,
+    employeesRouter,
+    permissionRouter,
+    attendancesRouter,
+    salarysRouter,
+    settingRouter,
+    socialRouter
+]
+
 const createRouter = () => new Router({
     // mode: 'history', // require service support
     scrollBehavior: () => ({ y: 0 }),
-    routes: constantRoutes
+    routes: [...constantRoutes, ...asyncRouter]
 })
 
 const router = createRouter()
