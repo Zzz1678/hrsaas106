@@ -1,5 +1,5 @@
-import { getToken, setToken, removeToken } from '@/utils/auth'
-import { login, getUserInfo, getUserDetailById, logout } from '@/api/user'
+import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth'
+import { login, getUserInfo, getUserDetailById } from '@/api/user'
 
 export default {
     namespaced: true,
@@ -39,6 +39,9 @@ export default {
             // actions 修改state 必须通过mutations
 
             context.commit("setToken", result)
+
+            // 存入时间戳
+            setTimeStamp()
         },
         // 调用接口获取用户数据
         async getUserInfo(context) {
