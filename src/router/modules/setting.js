@@ -9,7 +9,8 @@ export default {
         component: () =>
             import ('@/views/setting'),
         meta: {
-            title: "薪资"
+            title: "薪资",
+            icon: 'setting'
         }
     }]
 }
