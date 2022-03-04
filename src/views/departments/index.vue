@@ -13,7 +13,11 @@
           @node-click="handleNodeClick"
         >
           <!-- 传入内容 插槽 有都少节点就渲染多少个-->
-          <tree-tolls slot-scope="{ data }" :treeNode="data" />
+          <tree-tolls
+            slot-scope="{ data }"
+            :treeNode="data"
+            @updateDepts="getDepartments"
+          />
         </el-tree>
       </el-card>
     </div>
@@ -22,19 +26,14 @@
 
 <script>
 import TreeTolls from "./components/tree-tools.vue";
+import { getDepartments } from "@/api/departments";
+import { transListToTreeList } from "@/utils/index";
+
 export default {
   data() {
     return {
-      departs: [
-        {
-          name: "总裁办",
-          manager: "曹操",
-          children: [{ name: "董事会", manager: "曹丕" }],
-        },
-        { name: "行政部", manager: "刘备" },
-        { name: "人事部", manager: "孙权" },
-      ],
-      company: { name: "江苏传智播客教育科技股份有限公司", manager: "负责人" },
+      departs: [],
+      company: { name: "", manager: "" },
       defaultProps: {
         children: "children", //默认为children
         label: "name", //默认为label
@@ -44,9 +43,24 @@ export default {
   components: {
     TreeTolls,
   },
+  created() {
+    this.getDepartments();
+  },
+
   methods: {
     handleNodeClick(data) {
       console.log(data);
+    },
+
+    async getDepartments() {
+      const result = await getDepartments();
+      // console.log(result);
+      // console.log(result);
+      this.company = {
+        name: result.companyName,
+        manager: "负责人",
+      };
+      this.departs = transListToTreeList(result.depts, "");
     },
   },
 };

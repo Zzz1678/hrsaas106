@@ -15,15 +15,19 @@
         <el-col>{{ treeNode.manager }}</el-col>
         <!-- 放置下拉菜单 -->
         <el-col>
-          <el-dropdown>
+          <el-dropdown @command="handleCommand">
             <span>操作<i class="el-icon-arrow-down"></i> </span>
             <!-- 具名插槽 -->
             <el-dropdown-menu slot="dropdown">
               <!-- 下拉选项 -->
               <!-- 编辑部门和删除部门只会在子节点上显示 -->
-              <el-dropdown-item>添加子部门</el-dropdown-item>
-              <el-dropdown-item v-if="!isRoot">编辑子部门</el-dropdown-item>
-              <el-dropdown-item v-if="!isRoot">删除子部门</el-dropdown-item>
+              <el-dropdown-item command="add">添加子部门</el-dropdown-item>
+              <el-dropdown-item v-if="!isRoot" command="emit"
+                >编辑子部门</el-dropdown-item
+              >
+              <el-dropdown-item v-if="!isRoot" command="del"
+                >删除子部门</el-dropdown-item
+              >
             </el-dropdown-menu>
           </el-dropdown>
         </el-col>
@@ -33,6 +37,7 @@
 </template>
 
 <script>
+import { delDepartments } from "@/api/departments";
 export default {
   props: {
     //   定义属性
@@ -43,6 +48,25 @@ export default {
     isRoot: {
       type: Boolean,
       default: false,
+    },
+  },
+  methods: {
+    handleCommand(type) {
+      if (type === "add") {
+      } else if (type === "emit") {
+      } else {
+        //   提示确定是否删除 执行删除进入.then()  取消删除进入.catch()
+        this.$confirm("你确定要删除吗？")
+          .then(() => {
+            return delDepartments(this.treeNode.id);
+          })
+          //   删除成功了进入这里
+          .then(() => {
+            //   更新数据
+            this.$emit("updateDepts");
+            this.$message.success("删除部门成功");
+          });
+      }
     },
   },
 };
