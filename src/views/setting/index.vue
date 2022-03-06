@@ -27,9 +27,18 @@
               />
               <el-table-column align="center" prop="description" label="描述" />
               <el-table-column align="center" label="操作">
-                <el-button size="small" type="success">分配权限</el-button>
-                <el-button size="small" type="primary">编辑</el-button>
-                <el-button size="small" type="danger">删除</el-button>
+                <!-- 作用域插槽 取到当前数据的行数据 -->
+
+                <template slot-scope="{ row }">
+                  <el-button size="small" type="success">分配权限</el-button>
+                  <el-button size="small" type="primary">编辑</el-button>
+                  <el-button
+                    size="small"
+                    type="danger"
+                    @click="deleteRole(row.id)"
+                    >删除</el-button
+                  >
+                </template>
               </el-table-column>
             </el-table>
             <!-- 分页组件 -->
@@ -96,7 +105,7 @@
 </template>
 
 <script>
-import { getRoleList, getCompanyInfo } from "@/api/setting";
+import { getRoleList, getCompanyInfo, deleteRole } from "@/api/setting";
 import { mapGetters } from "vuex";
 export default {
   data() {
@@ -135,6 +144,18 @@ export default {
     //获取公司信息接口
     async getCompanyInfo() {
       this.formdata = await getCompanyInfo(this.companyId);
+    },
+
+    // 删除公司角色
+    async deleteRole(id) {
+      try {
+        await this.$confirm("确定要删除吗"); //此方法为promise对象需要等待执行完成后才可进入下一行 因此需要加上await修饰
+        await deleteRole(id);
+        this.getRoleList(); //重新获取数据
+        this.$message.success("删除成功");
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
