@@ -39,6 +39,7 @@
 <script>
 import { delDepartments } from "@/api/departments";
 export default {
+  name: "treeTools",
   props: {
     //   定义属性
     treeNode: {
@@ -53,7 +54,9 @@ export default {
   methods: {
     handleCommand(type) {
       if (type === "add") {
+        this.$emit("addDepts", this.treeNode);
       } else if (type === "emit") {
+        this.$emit("editDepts", this.treeNode);
       } else {
         //   提示确定是否删除 执行删除进入.then()  取消删除进入.catch()
         this.$confirm("你确定要删除吗？")
