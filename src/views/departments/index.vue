@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-container">
+  <div v-loading="loading" class="dashboard-container">
     <div class="app-container">
       <!--组织架构内容-头部 -->
       <el-card class="tree-card">
@@ -45,6 +45,7 @@ export default {
   name: "depart-index",
   data() {
     return {
+      loading: false,
       departs: [],
       company: { name: "", manager: "" },
       defaultProps: {
@@ -65,6 +66,7 @@ export default {
 
   methods: {
     async getDepartment() {
+      this.loading = true;
       const result = await getDepartments();
       // console.log(result);
       // console.log(result);
@@ -74,6 +76,7 @@ export default {
         id: "",
       };
       this.departs = transListToTreeList(result.depts, "");
+      this.loading = false;
     },
     addDepartment(node) {
       this.showDialog = !this.showDialog;
