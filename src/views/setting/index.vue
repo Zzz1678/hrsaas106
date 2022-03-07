@@ -234,10 +234,10 @@ export default {
 
         // 判断是否roleform有id,有则编辑，无则新增
         if (this.roleForm.id) {
-          updateRole(this.roleForm);
+          await updateRole(this.roleForm);
         } else {
           // 新增口子
-          addRole(this.roleForm);
+          await addRole(this.roleForm);
         }
 
         // 重新拉取数据更新页面
@@ -248,7 +248,7 @@ export default {
         this.showDialog = false; //关闭碳层会触发close事件
       } catch (error) {
         alert("没有通过校验");
-        console.log(error);
+        console.log(error + "sssss");
       }
     },
   },

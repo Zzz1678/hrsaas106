@@ -1,6 +1,11 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
+
+    <page-tools :showBefore="true">
+      <span slot="before">少时诵诗书</span>
+      <el-button slot="after" type="primary">导入excel表格</el-button>
+    </page-tools>
   </div>
 </template>
 
