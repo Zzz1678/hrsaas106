@@ -115,7 +115,7 @@ export function param2Obj(url) {
     })
     return obj
 }
-
+// 数组转化树型结构
 export function transListToTreeList(list, rootValue) {
     var arr = []
     list.forEach(item => {

@@ -6,7 +6,9 @@
         <template slot="after">
           <el-button size="small" type="warning">导入</el-button>
           <el-button size="small" type="danger">导出</el-button>
-          <el-button size="small" type="primary">新增员工</el-button>
+          <el-button size="small" type="primary" @click="showDialog = true"
+            >新增员工</el-button
+          >
         </template>
       </page-tools>
       <!-- 放置表格和分页 -->
@@ -70,6 +72,8 @@
           />
         </el-row>
       </el-card>
+      <!-- 放置弹层 -->
+      <add-employee :showDialog.sync="showDialog"> </add-employee>
     </div>
   </div>
 </template>
@@ -77,9 +81,12 @@
 <script>
 import { getEmployeeList, delEmployee } from "@/api/employees";
 import Employees from "@/api/constant/employees";
+import addEmployee from "./components/add-employee.vue";
 export default {
+  components: { addEmployee },
   data() {
     return {
+      showDialog: false,
       loading: false,
       list: [],
       page: {
@@ -89,7 +96,6 @@ export default {
       },
     };
   },
-
   created() {
     this.getEmployeeList();
   },
@@ -120,14 +126,10 @@ export default {
       try {
         await this.$confirm("你确定要删除数据吗？");
         const result = await delEmployee(id);
-        if (result.success) {
-          this.$message.success("删除成功！");
-          this.getEmployeeList();
-        } else {
-          this.$message.error("删除失败");
-        }
+        this.$message.success("删除成功！");
+        this.getEmployeeList();
       } catch (error) {
-        // this.$confirm(error);
+        this.$message.error(error);
       }
 
       this.loading = false;
