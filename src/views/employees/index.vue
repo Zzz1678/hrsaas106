@@ -39,13 +39,18 @@
             fixed="right"
             width="280"
           >
-            <template>
+            <template slot-scope="{ row }">
               <el-button type="text" size="small">查看</el-button>
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
               <el-button type="text" size="small">角色</el-button>
-              <el-button type="text" size="small">删除</el-button>
+              <el-button
+                type="text"
+                size="small"
+                @click="deleteEmployees(row.id)"
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -70,7 +75,7 @@
 </template>
 
 <script>
-import { getEmployeeList } from "@/api/employees";
+import { getEmployeeList, delEmployee } from "@/api/employees";
 import Employees from "@/api/constant/employees";
 export default {
   data() {
@@ -89,21 +94,43 @@ export default {
     this.getEmployeeList();
   },
   methods: {
+    // 改变页码
     changePage(newPage) {
       this.page.page = newPage;
       this.getEmployeeList();
     },
+    // 获取员工列表数据
     async getEmployeeList() {
       this.loading = true;
+      // 结构数据
       const { total, rows } = await getEmployeeList(this.page);
       this.page.total = total;
       this.list = rows;
       this.loading = false;
       // console.log(this.list.length);
     },
+    // 格式化页面数据
     formatEmployment(row, column, cellvalue, index) {
       const obj = Employees.hireType.find((emit) => emit.id === cellvalue);
-      return obj ? obj.value : "位置";
+      return obj ? obj.value : "未知";
+    },
+    // 删除员工
+    async deleteEmployees(id) {
+      this.loading = true;
+      try {
+        await this.$confirm("你确定要删除数据吗？");
+        const result = await delEmployee(id);
+        if (result.success) {
+          this.$message.success("删除成功！");
+          this.getEmployeeList();
+        } else {
+          this.$message.error("删除失败");
+        }
+      } catch (error) {
+        // this.$confirm(error);
+      }
+
+      this.loading = false;
     },
   },
 };
