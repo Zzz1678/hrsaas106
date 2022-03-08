@@ -6,18 +6,13 @@
       <span slot="before">少时诵诗书</span>
       <el-button slot="after" type="primary">导入excel表格</el-button>
     </page-tools>
-    <UploadExcel />
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import UploadExcel from "@/components/UploadExcel";
 export default {
   name: "Dashboard",
-  components: {
-    UploadExcel,
-  },
   computed: {
     ...mapGetters(["name"]),
   },

@@ -4,8 +4,13 @@
       <page-tools :show-before="true">
         <span slot="before">共166条记录</span>
         <template slot="after">
-          <el-button size="small" type="warning">导入</el-button>
-          <el-button size="small" type="danger">导出</el-button>
+          <el-button
+            size="small"
+            type="success"
+            @click="$router.push('/import')"
+            >导入</el-button
+          >
+          <el-button size="small" type="danger" @click="daoChu">导出</el-button>
           <el-button size="small" type="primary" @click="showDialog = true"
             >新增员工</el-button
           >
@@ -133,6 +138,41 @@ export default {
       }
 
       this.loading = false;
+    },
+
+    formatJson(headers, rows) {
+      return rows.map((item) =>
+        Object.keys(headers).map((key) => item[headers[key]])
+      );
+    },
+    // 导出员工
+    daoChu() {
+      const headers = {
+        手机号: "mobile",
+        姓名: "username",
+        入职日期: "timeOfEntry",
+        聘用形式: "formOfEmployment",
+        转正日期: "correctionTime",
+        工号: "workNumber",
+        部门: "departmentName",
+      };
+      import("@/vendor/Export2Excel").then(async (excel) => {
+        const { rows } = await getEmployeeList({
+          //注意：这里不要用this.老调用getEmployeeList
+          // 局部的可以直接调用整体的，整体的
+          page: 1,
+          size: this.page.total,
+        });
+        console.log(rows);
+        const data = this.formatJson(headers, rows);
+        excel.export_json_to_excel({
+          header: Object.keys(headers),
+          data,
+          filename: "员工信息表", //非必填
+          autoWidth: true, //非必填
+          bookType: "xlsx", //非必填
+        });
+      });
     },
   },
 };

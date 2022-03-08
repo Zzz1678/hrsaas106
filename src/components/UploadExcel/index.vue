@@ -29,8 +29,10 @@
     </div>
   </div>
 </template>
+
 <script>
 import XLSX from "xlsx";
+
 export default {
   props: {
     beforeUpload: Function, // eslint-disable-line
@@ -61,6 +63,7 @@ export default {
         return;
       }
       const rawFile = files[0]; // only use files[0]
+
       if (!this.isExcel(rawFile)) {
         this.$message.error(
           "Only supports upload .xlsx, .xls, .csv suffix files"
@@ -87,6 +90,7 @@ export default {
     },
     upload(rawFile) {
       this.$refs["excel-upload-input"].value = null; // fix can't select the same excel
+
       if (!this.beforeUpload) {
         this.readerData(rawFile);
         return;
@@ -107,6 +111,7 @@ export default {
           const worksheet = workbook.Sheets[firstSheetName];
           const header = this.getHeaderRow(worksheet);
           const results = XLSX.utils.sheet_to_json(worksheet);
+
           this.generateData({ header, results });
           this.loading = false;
           resolve();
@@ -136,6 +141,7 @@ export default {
   },
 };
 </script>
+
 <style scoped lang="scss">
 .upload-excel {
   display: flex;
