@@ -47,7 +47,12 @@
             width="280"
           >
             <template slot-scope="{ row }">
-              <el-button type="text" size="small">查看</el-button>
+              <el-button
+                type="text"
+                size="small"
+                @click="$router.push(`/employees/detail/${row.id}`)"
+                >查看</el-button
+              >
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
@@ -87,6 +92,7 @@
 import { getEmployeeList, delEmployee } from "@/api/employees";
 import Employees from "@/api/constant/employees";
 import addEmployee from "./components/add-employee.vue";
+import { formatDate } from "@/filters";
 export default {
   components: { addEmployee },
   data() {
@@ -139,17 +145,34 @@ export default {
 
       this.loading = false;
     },
-
+    // 获取data的函数
     formatJson(headers, rows) {
-      return rows.map((item) =>
-        Object.keys(headers).map((key) => item[headers[key]])
-      );
+      // return rows.map((item) =>
+      //   Object.keys(headers).map((key) => item[headers[key]])
+      // );
+
+      return rows.map((item) => {
+        return Object.keys(headers).map((key) => {
+          if (
+            headers[key] === "timeOfEntry" ||
+            headers[key] === "correctionTime"
+          ) {
+            return formatDate(item[headers[key]]);
+          } else if (headers[key] === "formOfEmployment") {
+            const obj = Employees.hireType.find(
+              (obj) => obj.id === item[headers[key]]
+            );
+            return obj ? obj.value : "未知";
+          }
+          return item[headers[key]];
+        });
+      });
     },
     // 导出员工
     daoChu() {
       const headers = {
-        手机号: "mobile",
         姓名: "username",
+        手机号: "mobile",
         入职日期: "timeOfEntry",
         聘用形式: "formOfEmployment",
         转正日期: "correctionTime",
@@ -171,6 +194,8 @@ export default {
           filename: "员工信息表", //非必填
           autoWidth: true, //非必填
           bookType: "xlsx", //非必填
+          mulitHeader: [["姓名", "主要信息", "部门"]],
+          merges: ["A1:A2", "B1:F1", "G1:G2"],
         });
       });
     },

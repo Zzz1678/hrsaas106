@@ -52,3 +52,16 @@ export function importEmployee(data) {
         data
     })
 }
+
+/** *
+ *
+ * 保存员工的基本信息
+ * **/
+export function saveUserDetailById(data) {
+    return request({
+        url: `/sys/user/${data.id}`,
+        method: 'put',
+        data
+        // 实现永慧明和密码的额修改，这里有一个缺陷，接口中我们都去到的用户名密码的密文
+    })
+}
