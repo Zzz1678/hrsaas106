@@ -6,6 +6,7 @@
       <span slot="before">少时诵诗书</span>
       <el-button slot="after" type="primary">导入excel表格</el-button>
     </page-tools>
+    <ImageUpload />
   </div>
 </template>
 
