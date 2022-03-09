@@ -10,6 +10,7 @@
               label-width="120px"
               style="margin-left: 120px; margin-top: 30px"
               :model="userInfo"
+              :rules="rules"
             >
               <el-form-item label="姓名:" prop="username">
                 <el-input v-model="userInfo.username" style="width: 300px" />
@@ -22,14 +23,21 @@
                 />
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="updateUserInfo"
-                  >更新</el-button
-                >
+                <el-button type="primary" @click="saveUser">更新</el-button>
               </el-form-item>
             </el-form>
           </el-tab-pane>
-          <el-tab-pane label="个人详情" />
-          <el-tab-pane label="岗位信息" />
+          <el-tab-pane label="个人详情">
+            <!-- <user-info /> -->
+            <!-- 这里使用动态组件 ,引用变量需要在data中把组件赋值给变量-->
+            <component :is="UserComponent" />
+          </el-tab-pane>
+          <el-tab-pane label="岗位信息">
+            <!-- 放置内容 -->
+            <!-- <user-info /> -->
+            <!-- 这里使用动态组件 ,引用变量需要在data中把组件赋值给变量-->
+            <component :is="JobComponent" />
+          </el-tab-pane>
         </el-tabs>
       </el-card>
     </div>
@@ -39,9 +47,13 @@
 <script>
 import { saveUserDetailById } from "@/api/employees";
 import { getUserDetailById } from "@/api/user";
+import UserInfo from "./components/user-info.vue";
+import JobInfo from "./components/job-info.vue";
 export default {
   data() {
     return {
+      UserComponent: UserInfo,
+      JobComponent: JobInfo,
       userId: this.$route.params.id,
       userInfo: {
         username: "",
@@ -58,6 +70,10 @@ export default {
       },
     };
   },
+  components: {
+    UserInfo,
+    JobInfo,
+  },
   created() {
     this.getUserDetailById();
   },
@@ -65,7 +81,7 @@ export default {
     async getUserDetailById() {
       this.userInfo = await getUserDetailById(this.userId);
     },
-    async updateUserInfo() {
+    async saveUser() {
       try {
         await this.$refs.UserInfoForm.validate();
         await saveUserDetailById({
@@ -73,6 +89,7 @@ export default {
           password: this.userInfo.password2,
         });
         this.$message.success("修改成功");
+        // 调用退出登录接口，并且导航到登录也重新登录
       } catch (error) {
         console.log(error);
       }
