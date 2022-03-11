@@ -29,8 +29,8 @@
 // 配置腾讯云cos
 import COS from "cos-js-sdk-v5";
 const cos = new COS({
-  SecretId: "AKIDNdgW7UcWBcpoZ5MOBj25tSmqfFagX9Vc",
-  SecretKey: "uZy83i8JYGjwtb5KK5aqqb7NOAhzAyX6",
+  SecretId: "",
+  SecretKey: "",
 });
 export default {
   name: "ImageUpload",
