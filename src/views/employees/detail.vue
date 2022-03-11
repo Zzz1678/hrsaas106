@@ -28,11 +28,25 @@
             </el-form>
           </el-tab-pane>
           <el-tab-pane label="个人详情">
+            <el-row type="flex" justify="end">
+              <el-tooltip content="打印个人基本信息">
+                <router-link :to="`/employees/print/${userId}?type=personal`">
+                  <i class="el-icon-printer" />
+                </router-link>
+              </el-tooltip>
+            </el-row>
             <!-- <user-info /> -->
             <!-- 这里使用动态组件 ,引用变量需要在data中把组件赋值给变量-->
             <component :is="UserComponent" />
           </el-tab-pane>
           <el-tab-pane label="岗位信息">
+            <el-row type="flex" justify="end">
+              <el-tooltip content="打印岗位信息">
+                <router-link :to="`/employees/print/${userId}?type=job`">
+                  <i class="el-icon-printer" />
+                </router-link>
+              </el-tooltip>
+            </el-row>
             <!-- 放置内容 -->
             <!-- <user-info /> -->
             <!-- 这里使用动态组件 ,引用变量需要在data中把组件赋值给变量-->

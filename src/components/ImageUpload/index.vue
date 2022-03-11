@@ -38,11 +38,7 @@ export default {
     return {
       showPrecent: false,
       percent: 0,
-      fileList: [
-        {
-          url: "https://img0.baidu.com/it/u=1278618774,2401043221&fm=253&fmt=auto&app=138&f=JPEG?w=575&h=500",
-        },
-      ], // 图片地址设置为数组
+      fileList: [], // 图片地址设置为数组
       showDialog: false, // 控制显示弹层
       imgUrl: "",
       dialogImageUrl: "",
@@ -73,6 +69,7 @@ export default {
     // 添加
     changeFile(file, fileList) {
       this.fileList = fileList.map((item) => item);
+      console.log(this.fileList);
     },
     //添加前校验
     beforeUpload(file) {
@@ -112,7 +109,7 @@ export default {
             StorageClass: "STANDARD", // 上传的模式类型 直接默认 标准模式即可
             // 上传到腾讯云 =》 哪个存储桶 哪个地域的存储桶 文件  格式  名称 回调
             onProgress: (params) => {
-              console.log(params);
+              // console.log(params);
               this.percent = params.percent * 100;
             },
           },

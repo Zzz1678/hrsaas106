@@ -13,6 +13,7 @@ import Components from './components'
 import * as directives from '@/directives/index'
 import * as filters from '@/filters/index'
 
+
 import '@/icons' // icon
 import '@/permission' // permission control
 
@@ -21,6 +22,7 @@ Vue.use(ElementUI, { locale })
     // 如果想要中文版 element-ui，按如下方式声明
     // Vue.use(ElementUI)
 Vue.config.productionTip = false
+
 
 // 注册自定义指令
 Object.keys(directives).forEach(key => Vue.directive(key, directives[key]))
