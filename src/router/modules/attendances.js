@@ -6,6 +6,7 @@ export default {
     component: LayOut,
     children: [{
         path: "",
+        name: "attendances",
         component: () =>
             import ('@/views/attendances'),
         meta: {

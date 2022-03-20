@@ -21,11 +21,21 @@
             <el-dropdown-menu slot="dropdown">
               <!-- 下拉选项 -->
               <!-- 编辑部门和删除部门只会在子节点上显示 -->
-              <el-dropdown-item command="add">添加子部门</el-dropdown-item>
-              <el-dropdown-item v-if="!isRoot" command="emit"
+              <el-dropdown-item
+                command="add"
+                :disabled="!checkPermission('add-dept')"
+                >添加子部门</el-dropdown-item
+              >
+              <el-dropdown-item
+                v-if="!isRoot"
+                command="emit"
+                :disabled="!checkPermission('edit-dept')"
                 >编辑子部门</el-dropdown-item
               >
-              <el-dropdown-item v-if="!isRoot" command="del"
+              <el-dropdown-item
+                v-if="!isRoot"
+                command="del"
+                :disabled="!checkPermission('del-dept')"
                 >删除子部门</el-dropdown-item
               >
             </el-dropdown-menu>

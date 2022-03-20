@@ -5,6 +5,7 @@ const getters = {
     name: state => state.user.userInfo.username, // 将子模块中的对象中的名称开放出来
     userId: state => state.user.userInfo.userId,
     staffPhoto: state => state.user.userInfo.staffPhoto,
-    companyId: state => state.user.userInfo.companyId // 建立对于user模块的companyId的快捷访问
+    companyId: state => state.user.userInfo.companyId, // 建立对于user模块的companyId的快捷访问
+    routes: state => state.permission.routes
 }
 export default getters

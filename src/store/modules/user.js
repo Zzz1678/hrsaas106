@@ -1,5 +1,6 @@
 import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth'
 import { login, getUserInfo, getUserDetailById } from '@/api/user'
+import { resetRouter } from '@/router'
 
 export default {
     namespaced: true,
@@ -63,6 +64,11 @@ export default {
             context.commit("removeToken")
                 // 删除用户数据
             context.commit("removeUserInfo")
+
+            // 
+            resetRouter();
+
+            context.commit("permission/setRoutes", [], { root: true })
         }
     }
 }

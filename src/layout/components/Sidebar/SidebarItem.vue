@@ -12,9 +12,10 @@
           :index="resolvePath(onlyOneChild.path)"
           :class="{ 'submenu-title-noDropdown': !isNest }"
         >
+          <!-- 每一个组件都有一个$t的方法 $t(key)-->
           <item
             :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
-            :title="onlyOneChild.meta.title"
+            :title="$t('route.' + onlyOneChild.name)"
           />
         </el-menu-item>
       </app-link>
