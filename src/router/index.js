@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
 import approvalsRouter from './modules/approvals'
 import departmentsRouter from './modules/departments'
 import employeesRouter from './modules/employees'
@@ -95,6 +94,8 @@ export const asyncRouter = [
 
 const createRouter = () => new Router({
     // mode: 'history', // require service support
+    mode: 'history',
+    base: "/hr/",
     scrollBehavior: () => ({ y: 0 }),
     routes: [...constantRoutes], //静态路由和动态路由临时合并
     // 静态路由合并解除

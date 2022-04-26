@@ -8,7 +8,7 @@ const timeOut = 3600
 
 const service = axios.create({
     baseURL: process.env.VUE_APP_BASE_API,
-    timeout: 5000
+    timeout: 50000
 });
 // 请求拦截
 service.interceptors.request.use(
