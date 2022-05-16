@@ -107,6 +107,7 @@ export default {
       loading: false,
       passwordType: "password",
       redirect: undefined,
+      route:["permissions"]
     };
   },
   watch: {
@@ -117,8 +118,12 @@ export default {
       immediate: true,
     },
   },
+   created(){
+  //  this.zdy();
+  },
   methods: {
     ...mapActions(["user/login"]),
+    ...mapActions(["permission/FilterRoutes"]),
     showPwd() {
       if (this.passwordType === "password") {
         this.passwordType = "";
@@ -144,6 +149,14 @@ export default {
         }
       });
     },
+
+    // 测试动态添加路由的状态管理方法 
+    // async zdy(){
+    // var ss = await this['permission/FilterRoutes'](this.route) 
+    // console.log("88888888");
+    // console.log(ss);
+    // console.log("88888888");
+    // }
   },
 };
 </script>

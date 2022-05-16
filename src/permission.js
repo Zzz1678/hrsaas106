@@ -23,7 +23,12 @@ router.beforeEach(async function(to, from, next) {
                 // async 函数所return的内容 用 await就可以接收到
                 const { roles } = await store.dispatch('user/getUserInfo');
 
+                // console.log("------------");
+                // console.log(roles);
+                // console.log("************");
+
                 const routes = await store.dispatch("permission/FilterRoutes", roles.menus);
+                console.log(routes);
                 // routes就是筛选得到的动态路由
                 // 动态路由 添加到 路由表中 默认的路由表 只有静态路由 没有动态路由
                 // addRoutes  必须 用 next(地址) 不能用next()

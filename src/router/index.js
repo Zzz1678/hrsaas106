@@ -80,6 +80,8 @@ export const constantRoutes = [{
     // { path: '*', redirect: '/404', hidden: true }
 ]
 
+
+// 动态添加路由
 export const asyncRouter = [
     approvalsRouter,
     departmentsRouter,
