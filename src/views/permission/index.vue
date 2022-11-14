@@ -16,7 +16,7 @@
         <el-table-column align="center" label="标识" prop="code" />
         <el-table-column align="center" label="描述" prop="description" />
         <el-table-column align="center" label="操作">
-          <template slot-scope="{ row }">
+          <template slot-scope="{row}">
             <el-button
               v-if="row.type === 1"
               type="text"
@@ -118,7 +118,10 @@ export default {
     // 获取所有角色
     async getPermissionList() {
       // 转化树形结构并赋值给表单
-      this.list = transListToTreeList(await getPermissionList(), "0");
+      var sss = await getPermissionList()
+      // console.log(JSON.stringify(sss));
+      this.list = transListToTreeList(sss, "0");
+      console.log(JSON.stringify(this.list));
     },
     // 删除
     async delPermission(id) {

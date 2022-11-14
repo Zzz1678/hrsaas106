@@ -17,7 +17,20 @@ const store = new Vuex.Store({
         permission,
         tagsView
     },
-    getters
+    getters,
+    state: {
+        list: [12, 34]
+    },
+    mutations: {
+        updateList(state, data) {
+            state.list = this.state.list.push(...data)
+        }
+    },
+    actions: {
+        yibu(context, result) {
+            context.commit('updateList', result)
+        }
+    }
 })
 
 export default store

@@ -119,11 +119,24 @@ export default {
     },
   },
    created(){
-  //  this.zdy();
+    //测试vuex的使用
+  // this.queryList()
   },
   methods: {
     ...mapActions(["user/login"]),
     ...mapActions(["permission/FilterRoutes"]),
+
+    //测试vuex的使用
+    // queryList(){
+    //   var sss = this.$store.state.list;
+    //   console.log("*********");
+    //   console.log(sss);
+    //   console.log("*********");
+    //   // this.$store.dispatch('yibu',[1,2,3,4])
+    //   this.$store.commit("updateList",[1,3,5])
+    //   console.log(sss);
+    // },
+
     showPwd() {
       if (this.passwordType === "password") {
         this.passwordType = "";

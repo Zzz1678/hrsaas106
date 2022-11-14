@@ -23,6 +23,7 @@
             @addDepts="addDepartment"
             @editDepts="editDepts"
           />
+          
         </el-tree>
       </el-card>
     </div>
@@ -68,7 +69,7 @@ export default {
     async getDepartment() {
       this.loading = true;
       const result = await getDepartments();
-      // console.log(result);
+      console.log(result);
       // console.log(result);
       this.company = {
         name: result.companyName,
@@ -76,6 +77,7 @@ export default {
         id: "",
       };
       this.departs = transListToTreeList(result.depts, "");
+      // console.log(this.departs);
       this.loading = false;
     },
     addDepartment(node) {

@@ -15,6 +15,7 @@ router.beforeEach(async function(to, from, next) {
     if (store.getters.token) {
         // 有 判断路径是登陆直接导航到首页
         if (to.path === '/login') {
+            // 已经登录直接导航到首页
             next('/')
                 // 其他直接放行
         } else {
@@ -28,7 +29,7 @@ router.beforeEach(async function(to, from, next) {
                 // console.log("************");
 
                 const routes = await store.dispatch("permission/FilterRoutes", roles.menus);
-                console.log(routes);
+                // console.log(routes);
                 // routes就是筛选得到的动态路由
                 // 动态路由 添加到 路由表中 默认的路由表 只有静态路由 没有动态路由
                 // addRoutes  必须 用 next(地址) 不能用next()

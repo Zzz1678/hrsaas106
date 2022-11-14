@@ -4,11 +4,11 @@ import store from '@/store'
 import { getTimeStamp } from './auth';
 import router from '@/router';
 
-const timeOut = 3600
+const timeOut = 3600;
 
 const service = axios.create({
     baseURL: process.env.VUE_APP_BASE_API,
-    timeout: 50000
+    // timeout: 5000
 });
 // 请求拦截
 service.interceptors.request.use(
@@ -45,6 +45,7 @@ service.interceptors.response.use(
             return Promise.reject(new Error(message));
         }
     },
+    // 响应失败了进入error  error对象中是放的错误信息，
     error => {
         // 后端返回token超时被动处理
         if (error.response && error.response.data & error.response.data.code === 1002) {

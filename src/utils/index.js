@@ -114,12 +114,16 @@ export function param2Obj(url) {
         }
     })
     return obj
+
+
 }
 // 数组转化树型结构
 export function transListToTreeList(list, rootValue) {
+    // debugger
     var arr = []
     list.forEach(item => {
-        if (item.pid === rootValue) {
+        // console.log(rootValue + " : " + item.id);
+        if (rootValue === item.pid) {
             const children = transListToTreeList(list, item.id)
             if (children.length) {
                 item.children = children
